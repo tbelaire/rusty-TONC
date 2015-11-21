@@ -1,11 +1,6 @@
-#![feature(intrinsics, lang_items, no_std, no_core)]
+#![feature(intrinsics, lang_items, no_std)]
 
-#![no_core]
-
-#[lang = "sized"]
-trait Sized {}
-#[lang = "copy"]
-trait Copy {}
+#![no_std]
 
 // // Declare some intrinsic functions that are provided to us by the compiler.
 // extern "rust-intrinsic" {
@@ -13,8 +8,14 @@ trait Copy {}
 //     fn u32_sub_with_overflow(x: u32, y: u32) -> (u32, bool);
 // }
 
-#[lang = "eh_personality"] extern fn eh_personality() {}
-#[lang = "panic_fmt"] fn panic_fmt() -> ! { loop {} }
+#[lang = "panic_fmt"]
+pub extern fn panic_fmt() -> ! { loop {} }
+
+#[lang = "stack_exhausted"]
+pub extern fn stack_exhausted() -> ! { loop {} }
+
+#[lang = "eh_personality"]
+pub extern fn eh_personality() -> ! { loop {} }
 
 // // I'm not 100% sure what this function does, but references to it are compiled
 // // into the program by the Rust compiler. I think it would be called in the case
@@ -25,12 +26,7 @@ pub fn __aeabi_unwind_cpp_pr0() {
 }
 
 
-// // This is the top of the stack, as provided to us by the linker.
-// extern {
-//     static _estack: u32;
-// }
-
 #[no_mangle]
 pub fn rust_main() -> u32 {
-    42
+    40 + 2
 }
