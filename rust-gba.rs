@@ -1,6 +1,7 @@
 #![feature(intrinsics, lang_items, no_std)]
 
 #![no_std]
+#![crate_type = "staticlib"]
 
 // // Declare some intrinsic functions that are provided to us by the compiler.
 // extern "rust-intrinsic" {
@@ -24,9 +25,20 @@ pub extern fn eh_personality() -> ! { loop {} }
 pub fn __aeabi_unwind_cpp_pr0() {
     loop {}
 }
+#[no_mangle]
+pub fn __aeabi_unwind_cpp_pr1() {
+    loop {}
+}
 
+mod gfx;
+
+use gfx::Color;
 
 #[no_mangle]
-pub fn rust_main() -> u32 {
-    40 + 2
+pub extern "C" fn main() {
+    let mut m = gfx::Mode3::new();
+    m.dot(120, 80, Color::rgb15(31, 0, 0));
+    m.dot(136, 80, Color::rgb15(0, 31, 0));
+    m.dot(120, 96, Color::rgb15(0, 0, 31));
 }
+
