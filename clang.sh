@@ -1,7 +1,6 @@
 #!/bin/bash -e
 set -x
-# FLAGS=" -mfloat-abi=soft -nostdlib -target armv7a-none-eabi"
-FLAGS=" -nostdlib -target arm-none-eabi  -mcpu=arm7tdmi " # -march=armv7a "
+FLAGS=" -nostdlib -target arm-none-eabi  -mcpu=arm7tdmi "
 clang $FLAGS -c first.c -o first.clang.o
 # clang $FLAGS -c gba_crt0.s -o gba_crt0.o
 arm-none-eabi-gcc -nostdlib -mthumb-interwork -mthumb -c gba_crt0.gcc.s -o gba_crt0.o
