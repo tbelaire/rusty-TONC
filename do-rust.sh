@@ -9,7 +9,7 @@ arm-none-eabi-gcc -nostdlib -mthumb-interwork -mthumb \
 # Call rustc to compile libcore for us.
 # This is slow, maybe switch to a makefile?
 [ -e libs/libcore.rlib ] ||
-  rustc --target=target.json -Z no-landing-pads ../../rust/src/libcore/lib.rs --out-dir libs/ --emit link,obj
+  rustc --target=target.json -Z no-landing-pads ../rust/src/libcore/lib.rs --out-dir libs/ --emit link,obj
 
 # I don't want to use anything in here, but it needs to exist.
 [ -e libs/libcompiler-rt.a ] ||
