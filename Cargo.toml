@@ -5,3 +5,5 @@ version = "0.0.1"
 authors = ["Theo Belaire"]
 
 
+[dependencies]
+gba = {path = "../gba"}

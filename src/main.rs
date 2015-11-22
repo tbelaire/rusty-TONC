@@ -3,13 +3,14 @@
 #![no_std]
 #![no_main]
 
+extern crate gba;
+
 mod lang;
 
 pub use lang::{__aeabi_unwind_cpp_pr0, __aeabi_unwind_cpp_pr1};
 
-mod gfx;
-
-use gfx::Color;
+use gba::gfx;
+use gba::gfx::Color;
 
 
 #[no_mangle]
