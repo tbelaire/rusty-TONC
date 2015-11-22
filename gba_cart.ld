@@ -78,14 +78,15 @@ SECTIONS
 		*(.plt)
 		. = ALIGN(4);   /* REQUIRED. LD is flaky without it. */
 	} >rom
-    .got :
-    {
-        *(.got)
-        *(.got.*)
-        . = ALIGN(4);
-    } >rom
 
-	.text  :   /* ALIGN (4): */
+	.got :
+	{
+		*(.got)
+		*(.got.*)
+		. = ALIGN(4);
+	} >rom
+
+.text  :   /* ALIGN (4): */
 	{
 		*(EXCLUDE_FILE (*.iwram*) .text)
 		*(.text .stub .text.* .gnu.linkonce.t.*)

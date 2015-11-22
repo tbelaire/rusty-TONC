@@ -1,13 +1,7 @@
-#![feature(intrinsics, lang_items, no_std)]
+#![feature(lang_items, no_std)]
 
 #![no_std]
 #![crate_type = "staticlib"]
-
-// // Declare some intrinsic functions that are provided to us by the compiler.
-// extern "rust-intrinsic" {
-//     fn overflowing_add<T>(a: T, b: T) -> T;
-//     fn u32_sub_with_overflow(x: u32, y: u32) -> (u32, bool);
-// }
 
 #[lang = "panic_fmt"]
 pub extern fn panic_fmt() -> ! { loop {} }
