@@ -15,11 +15,8 @@
 	"no-default-libraries": true,
 	"archive-format"      : "gnu",
 	"pre-link-args"       : [
-		"-Tgba_cart.ld",
-		"-nostdlib"
-	],
-	"post-link-args": [
-		"gba_crt0.o",
-		"crti.o"
+		"-specs=gba.specs",
+		"-lsysbase",
+		"-lc"
 	]
 }
