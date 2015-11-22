@@ -6,6 +6,7 @@ clang -nostdlib -target arm-none-eabi -mcpu=arm7tdmi -c second.c -o second.o
 arm-none-eabi-gcc -nostdlib -mthumb-interwork -mthumb \
     -c gba_crt0.s -o gba_crt0.o
 
+mkdir -p libs
 # Call rustc to compile libcore for us.
 # This is slow, maybe switch to a makefile?
 [ -e libs/libcore.rlib ] ||
