@@ -2,3 +2,5 @@
 *.gba
 *.elf
 
+.rust/
+target/

@@ -1,0 +1,4 @@
+[root]
+name = "rust-gba"
+version = "0.0.1"
+
