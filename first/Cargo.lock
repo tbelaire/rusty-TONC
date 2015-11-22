@@ -1,0 +1,11 @@
+[root]
+name = "rust-gba"
+version = "0.0.1"
+dependencies = [
+ "gba 0.1.0",
+]
+
+[[package]]
+name = "gba"
+version = "0.1.0"
+
