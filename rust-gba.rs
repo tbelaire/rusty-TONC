@@ -4,7 +4,12 @@
 #![no_main]
 
 #[lang = "panic_fmt"]
-pub extern fn panic_fmt() -> ! { loop {} }
+extern fn panic_fmt(_args: &core::fmt::Arguments,
+                    _file: &str,
+                    _line: u32) -> ! {
+    loop {}
+}
+
 
 #[lang = "stack_exhausted"]
 pub extern fn stack_exhausted() -> ! { loop {} }
