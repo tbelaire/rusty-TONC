@@ -1,6 +1,6 @@
 [package]
 
-name = "rust-gba"
+name = "first"
 version = "0.0.1"
 authors = ["Theo Belaire"]
 

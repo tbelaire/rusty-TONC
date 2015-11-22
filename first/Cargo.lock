@@ -1,5 +1,5 @@
 [root]
-name = "rust-gba"
+name = "first"
 version = "0.0.1"
 dependencies = [
  "gba 0.1.0",
