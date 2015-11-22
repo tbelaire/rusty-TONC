@@ -4,8 +4,10 @@
 	"linker"              : "arm-none-eabi-gcc",
 	"target-endian"       : "little",
 	"target-pointer-width": "32",
-    "cpu"                 : "arm7tdmi",
-    "arch"                : "arm",
+	"cpu"                 : "arm7tdmi",
+	"arch"                : "arm",
+	"relocation-model"    : "static",
+	"dynamic-linking-available" : "false",
 	"os"                  : "none",
 	"executables"         : true
 }

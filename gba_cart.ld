@@ -73,18 +73,6 @@ SECTIONS
 		. = ALIGN(4);
 	} >rom =0xff
 
-	.plt :
-	{
-		*(.plt)
-		. = ALIGN(4);   /* REQUIRED. LD is flaky without it. */
-	} >rom
-
-	.got :
-	{
-		*(.got)
-		*(.got.*)
-		. = ALIGN(4);
-	} >rom
 
 .text  :   /* ALIGN (4): */
 	{
