@@ -1,7 +1,7 @@
 #![feature(lang_items, no_std)]
 
 #![no_std]
-#![crate_type = "staticlib"]
+#![no_main]
 
 #[lang = "panic_fmt"]
 pub extern fn panic_fmt() -> ! { loop {} }
@@ -16,11 +16,11 @@ pub extern fn eh_personality() -> ! { loop {} }
 // // into the program by the Rust compiler. I think it would be called in the case
 // // of a program panic.
 #[no_mangle]
-pub fn __aeabi_unwind_cpp_pr0() {
+pub extern "C" fn __aeabi_unwind_cpp_pr0() {
     loop {}
 }
 #[no_mangle]
-pub fn __aeabi_unwind_cpp_pr1() {
+pub extern "C" fn __aeabi_unwind_cpp_pr1() {
     loop {}
 }
 
@@ -28,11 +28,14 @@ mod gfx;
 
 use gfx::Color;
 
+
 #[no_mangle]
-pub extern "C" fn main() {
+pub extern "C" fn main(_: i32, _: *const *const i8) -> i32 {
     let mut m = gfx::Mode3::new();
     m.dot(120, 80, Color::rgb15(31, 0, 0));
     m.dot(136, 80, Color::rgb15(0, 31, 0));
     m.dot(120, 96, Color::rgb15(0, 0, 31));
+
+    loop{}
 }
 
