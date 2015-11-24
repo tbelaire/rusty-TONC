@@ -15,7 +15,7 @@ use gba::input::Keys;
 
 use core::ptr;
 
-const Modes_img : &'static [u8; 19200] = include_bytes!("../resources/modes.img.bin");
+const Modes_img : &'static [u8; 76800] = include_bytes!("../resources/modes.img.bin");
 const Modes_pal : &'static [u8; 32]    = include_bytes!("../resources/modes.pal.bin");
 
 
@@ -60,7 +60,7 @@ pub extern "C" fn main(_: i32, _: *const *const i8) -> i32 {
     // }
 
     tonc_stolen::tonccpy(
-         gba::memmap::vid_mem as *mut u8, Modes_img as *const u8, 19200);
+         gba::memmap::vid_mem as *mut u8, Modes_img as *const u8, 76800);
     tonc_stolen::tonccpy(
         gba::memmap::pal_bg_mem as *mut u8, Modes_pal as *const u8, 32);
     }
