@@ -1,0 +1,6 @@
+resources/*.c
+resources/*.h
+resources/*.img.bin
+resources/*.pal.bin
+*.o
+target/
