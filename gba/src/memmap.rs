@@ -1,3 +1,4 @@
+use gfx::Color;
 
 pub const MEM_IO : u32 = 0x04000000;
 pub const MEM_PAL : u32 = 0x05000000;		// no 8bit write !!
@@ -14,15 +15,14 @@ pub const VRAM_PAGE_SIZE : u32 = 0x0A000;
 
 pub const MEM_VRAM_BACK : u32 = (MEM_VRAM + VRAM_PAGE_SIZE);
 
-pub type COLOR = u16;
-// pal_bg_mem[y] = COLOR (color y)
-pub const pal_bg_mem: *mut COLOR =  MEM_PAL as *mut COLOR;
+// pal_bg_mem[y] = Color (color y)
+pub const pal_bg_mem: *mut Color =  MEM_PAL as *mut Color;
 
-// vid_mem[a] = COLOR
-pub const vid_mem: *mut COLOR = MEM_VRAM as *mut COLOR;
+// vid_mem[a] = Color
+pub const vid_mem: *mut Color = MEM_VRAM as *mut Color;
 
-pub const vid_mem_front: *mut COLOR = MEM_VRAM as *mut COLOR;
-pub const vid_mem_back: *mut COLOR = MEM_VRAM_BACK as *mut COLOR;
+pub const vid_mem_front: *mut Color = MEM_VRAM as *mut Color;
+pub const vid_mem_back: *mut Color = MEM_VRAM_BACK as *mut Color;
 
 
 pub const REG_BASE: u32 = MEM_IO;

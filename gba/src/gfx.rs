@@ -10,9 +10,18 @@ pub struct PaletteIx (u8);
 
 impl Color {
     /// Creates a color with 16 bits, 5 bits for each channel.
-    pub fn rgb15(red: u32, green: u32, blue: u32) -> Color {
+    pub const fn rgb15(red: u32, green: u32, blue: u32) -> Color {
         Color((red | (green << 5) | (blue << 10)) as u16)
     }
+
+    pub const BLACK:  Color = Color(0x0000);
+    pub const RED:    Color = Color(0x001F);
+    pub const LIME:   Color = Color(0x03E0);
+    pub const YELLOW: Color = Color(0x03FF);
+    pub const BLUE:   Color = Color(0x7C00);
+    pub const MAG:    Color = Color(0x7C1F);
+    pub const CYAN:   Color = Color(0x7FE0);
+    pub const WHITE:  Color = Color(0x7FFF);
 }
 
 
