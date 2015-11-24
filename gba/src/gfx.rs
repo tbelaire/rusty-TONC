@@ -5,8 +5,10 @@ use ::memdef;
 use ::volatile_store;
 use ::volatile_load;
 
-pub struct Color (u16);
-pub struct PaletteIx (u8);
+#[derive(Eq, PartialEq, Copy, Clone, Debug)]
+pub struct Color (pub u16);
+#[derive(Eq, PartialEq, Copy, Clone, Debug)]
+pub struct PaletteIx (pub u8);
 
 impl Color {
     /// Creates a color with 16 bits, 5 bits for each channel.
@@ -96,6 +98,31 @@ impl Mode4 {
         }
         Mode4
     }
+    pub fn horz_line(&mut self, l: u32, r: u32, y: u32, color: PaletteIx) {
+        assert!(l < 240);
+        assert!(r < 240);
+        assert!(y < 160);
+        assert!(l <= r);
+
+        let double_color : u16 = (color.0 as u16) << 8 | (color.0 as u16);
+        let buff : &mut [u16] = unsafe {
+            slice::from_raw_parts_mut(
+                memmap::MEM_VRAM as *mut u16, 240 * 160 / 2)
+        };
+        // TODO off by one errors, think about this when not tired.
+        for i in (l / 2)..(r / 2) {
+            buff[(i + y * 120) as usize] = double_color;
+        }
+        // Might have missed the ends
+        if l & 1 == 1 {
+            self.dot(l, y, color);
+        }
+        if r & 1 == 1 {
+            self.dot(r, y, color);
+        }
+
+    }
+
     pub fn dot(&mut self, x: u32, y: u32, color: PaletteIx) {
         assert!(x < 240);
         assert!(y < 160);
@@ -105,18 +132,19 @@ impl Mode4 {
         //     *dst= (*dst& 0xFF) | (clrid<<8);    // odd pixel
         // else
         //     *dst= (*dst&~0xFF) |  clrid;        // even pixel
+        //
+        // TODO: /2 is correct?
 
         let buff : &mut [u16] = unsafe {
             slice::from_raw_parts_mut(
                 memmap::MEM_VRAM as *mut u16, 240 * 160 / 2)
         };
-        // TODO don't write as bytes!
         let c : u16 = color.0 as u16;
-        let old : u16 = buff[(x + y * 240) as usize];
+        let old : u16 = buff[(x + y * 240) as usize / 2];
         if x & 1 != 0 {
-            buff[(x +y*240) as usize] = (old & 0xFF) | (c << 8);
+            buff[(x +y*240) as usize / 2] = (old & 0xFF) | (c << 8);
         } else {
-            buff[(x +y*240) as usize] = (old & !0xFF) | c;
+            buff[(x +y*240) as usize / 2] = (old & !0xFF) | c;
         }
 
     }
