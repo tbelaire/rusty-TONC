@@ -1,6 +1,7 @@
 *.o
 *.gba
 *.elf
+*.vi
 
 .rust/
 target/
