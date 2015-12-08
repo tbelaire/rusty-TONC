@@ -1,4 +1,4 @@
-#![feature(lang_items, no_std, core, core_slice_ext)]
+#![feature(lang_items, no_std, core, core_slice_ext, core_intrinsics)]
 
 #![no_std]
 #![no_main]
@@ -10,6 +10,7 @@ mod lang;
 pub use lang::{__aeabi_unwind_cpp_pr0, __aeabi_unwind_cpp_pr1};
 
 
+use core::intrinsics::{volatile_store, volatile_load};
 use gba::*;
 use gba::input::Keys;
 

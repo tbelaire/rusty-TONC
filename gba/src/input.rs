@@ -1,6 +1,6 @@
 use ::memmap;
 use ::memdef;
-use ::volatile_load;
+use core::intrinsics::{volatile_load};
 
 /// Keys also functions as the flags for the keys.
 #[repr(C)]

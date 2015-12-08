@@ -2,8 +2,7 @@
 use core::slice;
 use ::memmap;
 use ::memdef;
-use ::volatile_store;
-use ::volatile_load;
+use core::intrinsics::{volatile_store, volatile_load};
 
 #[derive(Eq, PartialEq, Copy, Clone, Debug)]
 #[repr(C)]
