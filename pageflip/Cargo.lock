@@ -1,8 +1,8 @@
 [root]
-name = "key_demo"
+name = "pageflip"
 version = "0.0.1"
 dependencies = [
- "gba 0.1.0",
+ "gba 0.1.1",
 ]
 
 [[package]]
@@ -16,7 +16,7 @@ dependencies = [
 
 [[package]]
 name = "gba"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "gcc 0.3.20 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
