@@ -5,8 +5,8 @@
 
 extern crate gba;
 
+// These need to be exported symbols...
 mod lang;
-
 pub use lang::{__aeabi_unwind_cpp_pr0, __aeabi_unwind_cpp_pr1};
 
 
@@ -14,34 +14,40 @@ use core::intrinsics::{volatile_store, volatile_load};
 use gba::*;
 use gba::input::Keys;
 
-use core::mem;
 
-const FRAME_1_IMG : &'static [u8; 2304] =
+const IMG_HEIGHT : usize = 16;
+const IMG_WIDTH  : usize = 144;
+
+// One byte per pixel in mode 4.
+const IMG_BYTES : usize = IMG_HEIGHT * IMG_WIDTH * 1;
+
+const FRAME_1_IMG : &'static [u8; IMG_BYTES] =
     include_bytes!("../resources/page_pic_1.img.bin");
-const FRAME_2_IMG : &'static [u8; 2304] =
+const FRAME_2_IMG : &'static [u8; IMG_BYTES] =
     include_bytes!("../resources/page_pic_2.img.bin");
-const FRAME_PAL : &'static [u8; 32] =
-    include_bytes!("../resources/page_pic.pal.bin");
 
-const MEM_VRAM_BACK : u32 = (memmap::MEM_VRAM + memmap::VRAM_PAGE_SIZE);
+// 16 Entries of Color (u16).
+const FRAME_PAL : &'static [u8; 16 * 2] =
+    include_bytes!("../resources/page_pic.pal.bin");
 
 #[no_mangle]
 pub extern "C" fn main(_: i32, _: *const *const i8) -> i32 {
 
     let vid_mem_front = memmap::MEM_VRAM as *mut u8;
-    let vid_mem_back = MEM_VRAM_BACK as *mut u8;
+    let vid_mem_back = (memmap::MEM_VRAM + memmap::VRAM_PAGE_SIZE) as *mut u8;
 
     for ii in 0..16 as isize { // 16 is the height of the image.
         unsafe{
             // The image isn't a full screen wide, copy lines at a time.
             tonc_stolen::tonccpy(
                 vid_mem_front.offset(ii * gfx::M4_WIDTH as isize),
-                (FRAME_1_IMG as *const u8).offset(ii * 144),
-                144);
+                (FRAME_1_IMG as *const u8).offset(ii * IMG_WIDTH as isize),
+                // IMG_WIDTH in bytes, but it's one byte per pixel, so we are ok.
+                IMG_WIDTH);
             tonc_stolen::tonccpy(
                 vid_mem_back.offset(ii * gfx::M4_WIDTH as isize),
-                (FRAME_2_IMG as *const u8).offset(ii * 144),
-                144);
+                (FRAME_2_IMG as *const u8).offset(ii * IMG_WIDTH as isize),
+                IMG_WIDTH);
         }
     }
     unsafe{
@@ -51,7 +57,8 @@ pub extern "C" fn main(_: i32, _: *const *const i8) -> i32 {
     }
 
     // Sets the mode.
-    let mut mode4 = gfx::Mode4::new();
+    // We don't actually need to draw anything through it though.
+    let mut _mode4 = gfx::Mode4::new();
 
     let mut keys = input::Input::new();
 
