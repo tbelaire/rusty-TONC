@@ -1,6 +1,6 @@
 #!/bin/bash -ex
 
-target=key_demo
+target=pageflip
 
 mkdir -p out
 LIBS=~/.multirust/toolchains/nightly/lib/rustlib/gba.json/lib
