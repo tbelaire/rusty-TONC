@@ -30,15 +30,17 @@ pub extern "C" fn main(_: i32, _: *const *const i8) -> i32 {
     let vid_mem_front = memmap::MEM_VRAM as *mut u8;
     let vid_mem_back = MEM_VRAM_BACK as *mut u8;
 
-    for ii in 0..16 { // 16 is the height of the image.
+    for ii in 0..16 as isize { // 16 is the height of the image.
         unsafe{
             // The image isn't a full screen wide, copy lines at a time.
             tonc_stolen::tonccpy(
-                vid_mem_front.offset((ii * gfx::M4_WIDTH) as isize),
-                FRAME_1_IMG as *const u8, FRAME_1_IMG.len());
+                vid_mem_front.offset(ii * gfx::M4_WIDTH as isize),
+                (FRAME_1_IMG as *const u8).offset(ii * 144),
+                144);
             tonc_stolen::tonccpy(
-                vid_mem_back.offset((ii * gfx::M4_WIDTH) as isize),
-                FRAME_2_IMG as *const u8, FRAME_2_IMG.len());
+                vid_mem_back.offset(ii * gfx::M4_WIDTH as isize),
+                (FRAME_2_IMG as *const u8).offset(ii * 144),
+                144);
         }
     }
     unsafe{
