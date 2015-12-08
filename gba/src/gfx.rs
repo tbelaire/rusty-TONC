@@ -6,8 +6,11 @@ use ::volatile_store;
 use ::volatile_load;
 
 #[derive(Eq, PartialEq, Copy, Clone, Debug)]
+#[repr(C)]
 pub struct Color (pub u16);
+
 #[derive(Eq, PartialEq, Copy, Clone, Debug)]
+#[repr(C)]
 pub struct PaletteIx (pub u8);
 
 impl Color {
@@ -29,15 +32,15 @@ impl Color {
 
 
 // --- sizes ---
-const SCREEN_WIDTH: u32 = 240;
-const SCREEN_HEIGHT: u32 = 160;
+pub const SCREEN_WIDTH: u32 = 240;
+pub const SCREEN_HEIGHT: u32 = 160;
 
-const M3_WIDTH: u32 = SCREEN_WIDTH;
-const M3_HEIGHT: u32 = SCREEN_HEIGHT;
-const M4_WIDTH: u32 = SCREEN_WIDTH;
-const M4_HEIGHT: u32 = SCREEN_HEIGHT;
-const M5_WIDTH: u32 = 160;
-const M5_HEIGHT: u32 = 128;
+pub const M3_WIDTH: u32 = SCREEN_WIDTH;
+pub const M3_HEIGHT: u32 = SCREEN_HEIGHT;
+pub const M4_WIDTH: u32 = SCREEN_WIDTH;
+pub const M4_HEIGHT: u32 = SCREEN_HEIGHT;
+pub const M5_WIDTH: u32 = 160;
+pub const M5_HEIGHT: u32 = 128;
 
 pub fn vid_vsync(){
     unsafe{

@@ -1,0 +1,15 @@
+[package]
+
+name = "key_demo"
+version = "0.0.1"
+authors = ["Theo Belaire"]
+
+
+[target.gba.json]
+cc     = "arm-none-eabi-gcc"
+linker = "arm-none-eabi-gcc"
+ar     = "arm-none-eabi-ar"
+
+
+[dependencies]
+gba = {path = "../gba"}
