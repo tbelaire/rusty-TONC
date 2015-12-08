@@ -7,9 +7,6 @@ pub const MEM_VRAM : u32 = 0x06000000;		// no 8bit write !!
 pub const PAL_SIZE : u32 = 0x00400;
 pub const VRAM_SIZE : u32 = 0x18000;
 
-pub const M3_SIZE : u32 = 0x12C00;
-pub const M4_SIZE : u32 = 0x09600;
-pub const M5_SIZE : u32 = 0x0A000;
 pub const VRAM_PAGE_SIZE : u32 = 0x0A000;
 
 // pal_bg_mem[y] = Color (color y)
