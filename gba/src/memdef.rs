@@ -23,6 +23,10 @@ pub const DCNT_WINOBJ:  u32 = 0x8000;	///< Enable object window
 pub const DCNT_MODE_MASK:  u32 = 0x0007;
 pub const DCNT_MODE_SHIFT:  u32 = 0;
 
+// This is just ported directly from TONC,
+// I'll get around to fixing it up sometime,
+// till then just leave it matching.
+#[allow(non_snake_case)]
 pub fn DCNT_MODE(n : u32) -> u32 {
     n << DCNT_MODE_SHIFT
 }
@@ -31,6 +35,7 @@ pub fn DCNT_MODE(n : u32) -> u32 {
 pub const DCNT_LAYER_MASK:  u32 = 0x1F00;
 pub const DCNT_LAYER_SHIFT:  u32 = 8;
 
+#[allow(non_snake_case)]
 pub fn DCNT_LAYER(n : u32) -> u32 {
     n << DCNT_LAYER_SHIFT
 }
@@ -38,36 +43,14 @@ pub fn DCNT_LAYER(n : u32) -> u32 {
 pub const DCNT_WIN_MASK:  u32 = 0xE000;
 pub const DCNT_WIN_SHIFT:  u32 = 13;
 
+#[allow(non_snake_case)]
 pub fn DCNT_WIN(n: u32) -> u32 {
     n << DCNT_WIN_SHIFT
 }
 
+#[allow(non_snake_case)]
 pub fn DCNT_BUILD(mode: u32, layer: u32, win: u32, obj1d: u32, objhbl: u32) -> u32 {
     (((win)&7)<<13) | (((layer)&31)<<8) | (((obj1d)&1)<<6)
         | (((objhbl)&1)<<5) | ((mode)&7)
 }
-
-
-// --- REG_KEYINPUT ---
-
-pub const KEY_A:  u32 = 0x0001;	///< Button A
-pub const KEY_B:  u32 = 0x0002;	///< Button B
-pub const KEY_SELECT:  u32 = 0x0004;	///< Select button
-pub const KEY_START:  u32 = 0x0008;	///< Start button
-pub const KEY_RIGHT:  u32 = 0x0010;	///< Right D-pad
-pub const KEY_LEFT:  u32 = 0x0020;	///< Left D-pad
-pub const KEY_UP:  u32 = 0x0040;	///< Up D-pad
-pub const KEY_DOWN:  u32 = 0x0080;	///< Down D-pad
-pub const KEY_R:  u32 = 0x0100;	///< Shoulder R
-pub const KEY_L:  u32 = 0x0200;	///< Shoulder L
-
-pub const KEY_ANY:  u32 = 0x03FF;	///< any key
-pub const KEY_DIR:  u32 = 0x00F0;	///< any-dpad
-pub const KEY_ACCEPT:  u32 = 0x0009;	///< A or start
-pub const KEY_CANCEL:  u32 = 0x0002;	///< B (well, it usually is)
-pub const KEY_SHOULDER:  u32 = 0x0300;	///< L or R
-
-pub const KEY_RESET:  u32 = 0x000F;	///< St+Se+A+B
-
-pub const KEY_MASK:  u32 = 0x03FF;
 

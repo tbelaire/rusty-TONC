@@ -9,10 +9,11 @@ pub const VRAM_SIZE : u32 = 0x18000;
 
 pub const VRAM_PAGE_SIZE : u32 = 0x0A000;
 
-// pal_bg_mem[y] = Color (color y)
+// Nice names for the most important banks...
+// Copied from TONC directly, maybe I'll revisit later.
+#[allow(non_upper_case_globals)]
 pub const pal_bg_mem: *mut Color =  MEM_PAL as *mut Color;
-
-// vid_mem[a] = Color
+#[allow(non_upper_case_globals)]
 pub const vid_mem: *mut Color = MEM_VRAM as *mut Color;
 
 
