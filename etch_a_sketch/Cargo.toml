@@ -1,0 +1,9 @@
+[package]
+
+name = "etch_a_sketch"
+version = "0.0.1"
+authors = ["Theo Belaire"]
+
+
+[dependencies]
+gba = {path = "../gba"}

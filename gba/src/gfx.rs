@@ -31,8 +31,8 @@ impl Color {
 
 
 // --- sizes ---
-pub const SCREEN_WIDTH: u32 = 240;
-pub const SCREEN_HEIGHT: u32 = 160;
+pub const SCREEN_WIDTH: i32 = 240;
+pub const SCREEN_HEIGHT: i32 = 160;
 
 pub fn vid_vsync(){
     unsafe{
@@ -58,6 +58,10 @@ impl Mode3 {
     pub const HEIGHT : usize = 160;
     pub const BIT_DEPTH : usize = 16;
     pub const SIZE : usize = 0x12C00; // WIDTH * HEIGHT * BIT_DEPTH/8
+
+    // Doesn't actually compile yet.  But I like the idea, if not the name.
+    // pub type Entry = Color;
+
     /// Calling this invalidates all other modes and enters Mode3.
     pub fn new () -> Mode3 {
         unsafe {
@@ -69,15 +73,14 @@ impl Mode3 {
     }
 
     /// Draw a dot at co-ordinates (x, y), and of color `color`.
-    pub fn dot(&mut self, x: u32, y: u32, color: Color) {
-
-        assert!(x < 240);
-        assert!(y < 160);
+    pub fn dot(&mut self, x: i32, y: i32, color: Color) {
+        assert!(0 <= x && x < Self::WIDTH as i32);
+        assert!(0 <= y && y < Self::HEIGHT as i32);
 
         let buff : &mut [u16] = unsafe {
             slice::from_raw_parts_mut(0x06000000 as *mut u16, 240 * 160)
         };
-        buff[(x+y*240) as usize] = color.0;
+        buff[(x+y*Self::WIDTH as i32) as usize] = color.0;
     }
 }
 
@@ -112,10 +115,10 @@ impl Mode4 {
         Mode4 {current_page: current_page}
     }
 
-    pub fn horz_line(&mut self, l: u32, r: u32, y: u32, color: PaletteIx) {
-        assert!(l < 240);
-        assert!(r < 240);
-        assert!(y < 160);
+    pub fn horz_line(&mut self, l: i32, r: i32, y: i32, color: PaletteIx) {
+        assert!(0 <= l && l < 240);
+        assert!(0 <= r && r < 240);
+        assert!(0 <= r && y < 160);
         assert!(l <= r);
 
         let double_color : u16 = (color.0 as u16) << 8 | (color.0 as u16);
@@ -133,9 +136,9 @@ impl Mode4 {
 
     }
 
-    pub fn dot(&mut self, x: u32, y: u32, color: PaletteIx) {
-        assert!(x < 240);
-        assert!(y < 160);
+    pub fn dot(&mut self, x: i32, y: i32, color: PaletteIx) {
+        assert!(0 <= x && x < 240);
+        assert!(0 <= y && y < 160);
 
         // u16 *dst= &vid_page[(y*M4_WIDTH+x)/2];  // Division by 2 due to u8/u16 pointer mismatch!
         // if(x&1)
@@ -197,15 +200,15 @@ impl Mode5 {
     }
 
     /// Draw a dot at co-ordinates (x, y), and of color `color`.
-    pub fn dot(&mut self, x: u32, y: u32, color: Color) {
+    pub fn dot(&mut self, x: i32, y: i32, color: Color) {
 
-        assert!(x < 160);
-        assert!(y < 126);
+        assert!(0 <= x && x < Self::WIDTH as i32);
+        assert!(0 <= y && y < Self::HEIGHT as i32);
 
         let buff : &mut [u16] = unsafe {
             slice::from_raw_parts_mut(0x06000000 as *mut u16, 160 * 128)
         };
-        buff[(x+y*160) as usize] = color.0;
+        buff[(x+y*Self::WIDTH as i32) as usize] = color.0;
     }
 }
 
