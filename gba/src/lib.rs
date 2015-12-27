@@ -1,6 +1,4 @@
-#![feature(no_std,
-           intrinsics, core_intrinsics,
-           core_slice_ext,
+#![feature(intrinsics, core_intrinsics,
            const_fn,
            associated_consts)]
 
