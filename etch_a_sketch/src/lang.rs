@@ -8,10 +8,6 @@ extern fn panic_fmt(_args: &core::fmt::Arguments,
     loop {}
 }
 
-
-#[lang = "stack_exhausted"]
-pub extern fn stack_exhausted() -> ! { loop {} }
-
 #[lang = "eh_personality"]
 pub extern fn eh_personality() -> ! { loop {} }
 

@@ -1,16 +1,14 @@
 #!/bin/bash -ex
 
-target=pageflip
+target=key_demo
 
 mkdir -p out
 
 # "Compile images"
 cd resources
-grit page_pic.png -gb -ah16 -gB8 -o page_pic_1 -ftb -p'!'
-grit page_pic.png -gb -at16 -ah16 -gB8 -o page_pic_2 -ftb -p'!'
-grit page_pic.png -g'!' -p -ftb -pu32 -pn16 -o page_pic
+# Cut the palette off at 16 entries
+grit gba.png -gb -gB8 -ft bin -pe16
 cd ..
-
 
 
 xargo build --target=gba --release --verbose
