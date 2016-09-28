@@ -1,4 +1,4 @@
-
+#![allow(non_upper_case_globals, non_snake_case)]
 pub const DCNT_MODE0:  u32 = 0;	///< Mode 0; bg 0-4: reg
 pub const DCNT_MODE1:  u32 = 0x0001;	///< Mode 1; bg 0-1: reg; bg 2: affine
 pub const DCNT_MODE2:  u32 = 0x0002;	///< Mode 2; bg 2-2: affine
@@ -31,7 +31,6 @@ pub fn DCNT_MODE(n : u32) -> u32 {
     n << DCNT_MODE_SHIFT
 }
 
-
 pub const DCNT_LAYER_MASK:  u32 = 0x1F00;
 pub const DCNT_LAYER_SHIFT:  u32 = 8;
 
@@ -54,3 +53,60 @@ pub fn DCNT_BUILD(mode: u32, layer: u32, win: u32, obj1d: u32, objhbl: u32) -> u
         | (((objhbl)&1)<<5) | ((mode)&7)
 }
 
+
+// REG_BGxCNT
+//
+pub const BG_MOSAIC: u32 = 0x0040;  //< Enable Mosaic
+pub const BG_4BPP: u32 = 0;         //< 4bpp (16 color) bg (no effect on affine bg)
+pub const BG_8BPP: u32 = 0x0080;    //< 8bpp (256 color) bg (no effect on affine bg)
+pub const BG_WRAP: u32 = 0x2000;    //< Wrap around edges of affine bgs
+pub const BG_SIZE0: u32 = 0;
+pub const BG_SIZE1: u32 = 0x4000;
+pub const BG_SIZE2: u32 = 0x8000;
+pub const BG_SIZE3: u32 = 0xC000;
+pub const BG_REG_32x32: u32 = 0;    //< reg bg, 32x32 (256x256 px)
+pub const BG_REG_64x32: u32 = 0x4000;    //< reg bg, 64x32 (512x256 px)
+pub const BG_REG_32x64: u32 = 0x8000;    //< reg bg, 32x64 (256x512 px)
+pub const BG_REG_64x64: u32 = 0xC000;    //< reg bg, 64x64 (512x512 px)
+pub const BG_AFF_16x16: u32 = 0;    //< affine bg, 16x16 (128x128 px)
+pub const BG_AFF_32x32: u32 = 0x4000;    //< affine bg, 32x32 (256x256 px)
+pub const BG_AFF_64x64: u32 = 0x8000;    //< affine bg, 64x64 (512x512 px)
+pub const BG_AFF_128x128: u32 = 0xC000;  //< affine bg, 128x128 (1024x1024 px)
+
+pub const BG_PRIO_MASK: u32 = 0x0003;
+pub const BG_PRIO_SHIFT: u32 = 0;
+#[inline]
+pub fn BG_PRIO(n:u32) -> u32 {
+    n << BG_PRIO_SHIFT
+}
+
+pub const BG_CBB_MASK: u32 = 0x000C;
+pub const BG_CBB_SHIFT: u32 = 2;
+#[inline]
+pub fn BG_CBB(n:u32) -> u32 {
+    n << BG_CBB_SHIFT
+}
+
+pub const BG_SBB_MASK: u32 = 0x1F00;
+pub const BG_SBB_SHIFT: u32 = 8;
+#[inline]
+pub fn BG_SBB(n:u32) -> u32 {
+    n << BG_SBB_SHIFT
+}
+
+pub const BG_SIZE_MASK: u32 = 0xC000;
+pub const BG_SIZE_SHIFT: u32 = 14;
+#[inline]
+pub fn BG_SIZE(n:u32) -> u32 {
+    n << BG_SIZE_SHIFT
+}
+
+
+/*
+#define BG_BUILD(cbb, sbb, size, bpp, prio, mos, wrap)		\
+(															\
+	   ((size)<<14)  | (((wrap)&1)<<13) | (((sbb)&31)<<8	\
+	| (((bpp)&8)<<4) | (((mos)&1)<<6)   | (((cbb)&3)<<2)	\
+	| ((prio)&3)											\
+)
+*/

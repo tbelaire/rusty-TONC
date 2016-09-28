@@ -1,0 +1,21 @@
+[root]
+name = "brin_demo"
+version = "0.0.1"
+dependencies = [
+ "gba 0.1.1",
+]
+
+[[package]]
+name = "gba"
+version = "0.1.1"
+dependencies = [
+ "gcc 0.3.35 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "gcc"
+version = "0.3.35"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[metadata]
+"checksum gcc 0.3.35 (registry+https://github.com/rust-lang/crates.io-index)" = "91ecd03771effb0c968fd6950b37e89476a578aaf1c70297d8e92b6516ec3312"

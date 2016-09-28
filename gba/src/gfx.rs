@@ -42,7 +42,7 @@ pub fn vid_vsync(){
 }
 
 /// Check out http://www.coranac.com/tonc/text/bitmaps.htm for more details on
-/// different modes.
+/// different bitmap modes.
 ///
 /// Mode3 is a one buffer, with width 240, height 160, and 16 bits per pixel (bpp).
 /// Is it the most basic of modes.
