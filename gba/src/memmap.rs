@@ -1,4 +1,5 @@
 use gfx::Color;
+use types::*;
 
 pub const MEM_IO : u32 = 0x04000000;
 pub const MEM_PAL : u32 = 0x05000000;		// no 8bit write !!
@@ -15,6 +16,11 @@ pub const VRAM_PAGE_SIZE : u32 = 0x0A000;
 pub const pal_bg_mem: *mut Color =  MEM_PAL as *mut Color;
 #[allow(non_upper_case_globals)]
 pub const vid_mem: *mut Color = MEM_VRAM as *mut Color;
+#[allow(non_upper_case_globals)]
+pub const tile_mem: *mut Charblock = MEM_VRAM as *mut Charblock;
+
+#[allow(non_upper_case_globals)]
+pub const se_mem: *mut Screenblock = MEM_VRAM as *mut Screenblock;
 
 
 
