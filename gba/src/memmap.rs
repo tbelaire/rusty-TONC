@@ -1,26 +1,36 @@
+#![allow(non_upper_case_globals)]
 use gfx::Color;
 use types::*;
+use oam::obj_attr;
 
-pub const MEM_IO : u32 = 0x04000000;
-pub const MEM_PAL : u32 = 0x05000000;		// no 8bit write !!
-pub const MEM_VRAM : u32 = 0x06000000;		// no 8bit write !!
+pub const MEM_IO:   u32 = 0x04000000;
+pub const MEM_PAL:  u32 = 0x05000000;  // no 8bit write !!
+pub const MEM_VRAM: u32 = 0x06000000;  // no 8bit write !!
+pub const MEM_OAM:  u32 = 0x07000000;  // no 8bit write !!
 
-pub const PAL_SIZE : u32 = 0x00400;
-pub const VRAM_SIZE : u32 = 0x18000;
+pub const PAL_SIZE:  u32 = 0x00400;
+pub const VRAM_SIZE: u32 = 0x18000;
+pub const OAM_SIZE:  u32 = 0x00400;
 
+pub const PAL_BG_SIZE:     u32 = 0x00200;
+pub const PAL_OBJ_SIZE:    u32 = 0x00200;
+pub const VRAM_BG_SIZE:    u32 = 0x10000;
+pub const VRAM_OBJ_SIZE:   u32 = 0x08000;
+pub const M3_SIZE:         u32 = 0x12C00;
+pub const M4_SIZE:         u32 = 0x09600;
+pub const M5_SIZE:         u32 = 0x0A000;
 pub const VRAM_PAGE_SIZE : u32 = 0x0A000;
+
 
 // Nice names for the most important banks...
 // Copied from TONC directly, maybe I'll revisit later.
-#[allow(non_upper_case_globals)]
-pub const pal_bg_mem: *mut Color =  MEM_PAL as *mut Color;
-#[allow(non_upper_case_globals)]
-pub const vid_mem: *mut Color = MEM_VRAM as *mut Color;
-#[allow(non_upper_case_globals)]
-pub const tile_mem: *mut Charblock = MEM_VRAM as *mut Charblock;
+pub const pal_bg_mem:  *mut Color       = MEM_PAL as *mut Color;
+pub const pal_obj_mem: *mut Color       = (MEM_PAL + PAL_BG_SIZE) as *mut Color;
+pub const vid_mem:     *mut Color       = MEM_VRAM as *mut Color;
+pub const tile_mem:    *mut Charblock   = MEM_VRAM as *mut Charblock;
 
-#[allow(non_upper_case_globals)]
-pub const se_mem: *mut Screenblock = MEM_VRAM as *mut Screenblock;
+pub const se_mem:      *mut Screenblock = MEM_VRAM as *mut Screenblock;
+pub const oam_mem:     *mut obj_attr    = MEM_OAM as *mut obj_attr;
 
 
 

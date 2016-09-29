@@ -112,3 +112,75 @@ void *tonccpy(void *dst, const void *src, uint size)
 	return dst;
 }
 
+//! VRAM-safe memclr.
+/*!	This version mimics memclr in functionality, with 
+	the benefit of working for VRAM as well. It is also 
+	slightly faster than the original memcpy, but faster 
+	implementations can be made.
+	\param dst	Destination pointer.
+	\param size	Fill-length in bytes.
+	\return		\a dst.
+	\note	The pointers and size need not be word-aligned.
+*/
+void *toncclr(void *dst, uint size)
+{
+	if(size == 0 || dst==NULL)
+		return dst;
+
+	uint count;
+	u16 *dst16;		// hword destination
+
+	// Ideal case: copy by 4x words. Leaves tail for later.
+	if( ((u32)dst)%4==0 && size>=4)
+	{
+		u32 *dst32= (u32*)dst;
+
+		count= size/4;
+		uint tmp= count&3;
+		count /= 4;
+
+		// Duff, bitch!
+		switch(tmp) {
+			do {	*dst32++ = 0;
+		case 3:		*dst32++ = 0;
+		case 2:		*dst32++ = 0;
+		case 1:		*dst32++ = 0;
+		case 0:		; }	while(count--);
+		}
+
+		// Check for tail
+		size &= 3;
+		if(size == 0)
+			return dst;
+
+		dst16= (u16*)dst32;
+	}
+	else		// Unaligned.
+	{
+		uint dstOfs= (u32)dst&1;
+		dst16= (u16*)(dst-dstOfs);
+
+		// Head: 1 byte.
+		if(dstOfs != 0)
+		{
+			*dst16= (*dst16 & 0xFF);
+			dst16++;
+			if(--size==0)
+				return dst;
+		}
+	}
+
+	// Unaligned main: copy by 2x byte.
+	count= size/2;
+	while(count--)
+	{
+		*dst16++ = 0;
+	}
+
+	// Tail: 1 byte.
+	if(size&1)
+		*dst16= (*dst16 &~ 0xFF);
+
+	return dst;
+}
+

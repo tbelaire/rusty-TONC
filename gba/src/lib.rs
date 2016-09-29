@@ -10,3 +10,4 @@ pub mod memdef;
 pub mod memmap;
 pub mod tonc_stolen;
 pub mod types;
+pub mod oam;

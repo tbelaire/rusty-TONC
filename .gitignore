@@ -2,6 +2,9 @@
 *.gba
 *.elf
 *.vi
+*.bk
+**/resources/*.h
+**/resources/*.bin
 
 .rust/
 target/

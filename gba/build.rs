@@ -4,6 +4,7 @@ extern crate gcc;
 
 fn main() {
     let mut config = gcc::Config::new();
+    config.flag("-fno-tree-loop-distribute-patterns");
     config.compiler("arm-none-eabi-gcc")
         .archiver("arm-none-eabi-ar");
     config.file("src/tonc_core.c");

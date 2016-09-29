@@ -110,3 +110,140 @@ pub fn BG_SIZE(n:u32) -> u32 {
 	| ((prio)&3)											\
 )
 */
+
+
+// --- OAM attribute 0 ---------------------------------------------
+
+pub const ATTR0_REG:         u16 = 0;      // Regular object
+pub const ATTR0_AFF:         u16 = 0x0100; // Affine object
+pub const ATTR0_HIDE:        u16 = 0x0200; // Inactive object
+pub const ATTR0_AFF_DBL:     u16 = 0x0300; // Double-size affine object
+pub const ATTR0_AFF_DBL_BIT: u16 = 0x0200;
+pub const ATTR0_BLEND:       u16 = 0x0400; // Enable blend
+pub const ATTR0_WINDOW:      u16 = 0x0800; // Use for object window
+pub const ATTR0_MOSAIC:      u16 = 0x1000; // Enable mosaic
+pub const ATTR0_4BPP:        u16 = 0;      // Use 4bpp (16 color) tiles
+pub const ATTR0_8BPP:        u16 = 0x2000; // Use 8bpp (256 color) tiles
+pub const ATTR0_SQUARE:      u16 = 0;      // Sq     uare shape
+pub const ATTR0_WIDE:        u16 = 0x4000; // Tall shape (height &gt; width)
+pub const ATTR0_TALL:        u16 = 0x8000; // Wide shape (height &lt; width)
+
+pub const ATTR0_Y_MASK:      u16 = 0x00FF;
+pub const ATTR0_Y_SHIFT:     u16 = 0;
+
+#[inline]
+pub fn ATTR0_Y(n:u16) -> u16 {
+    n << ATTR0_Y_SHIFT
+}
+
+pub const ATTR0_MODE_MASK:   u16 = 0x0300;
+pub const ATTR0_MODE_SHIFT:  u16 = 8;
+// #define ATTR0_MODE(n)        ((n)<<ATTR0_MODE_SHIFT)
+#[inline]
+pub fn ATTR0_MODE(n:u16) -> u16 {
+    n << ATTR0_MODE_SHIFT
+}
+
+pub const ATTR0_SHAPE_MASK:  u16 = 0xC000;
+pub const ATTR0_SHAPE_SHIFT: u16 = 14;
+// #define ATTR0_SHAPE(n)    ((n)<<ATTR0_SHAPE_SHIFT)
+#[inline]
+pub fn ATTR0_SHAPE(n:u16) -> u16 {
+    n << ATTR0_SHAPE_SHIFT
+}
+
+// --- OAM attribute 1 ---------------------------------------------
+
+pub const ATTR1_HFLIP:         u16 = 0x1000;    // Horizontal flip (reg obj only)
+pub const ATTR1_VFLIP:         u16 = 0x2000;    // Vertical flip (reg obj only)
+// Base sizes
+pub const ATTR1_SIZE_8:        u16 = 0;
+pub const ATTR1_SIZE_16:       u16 = 0x4000;
+pub const ATTR1_SIZE_32:       u16 = 0x8000;
+pub const ATTR1_SIZE_64:       u16 = 0xC000;
+// Square sizes
+pub const ATTR1_SIZE_8x8:      u16 = 0;    // Size flag for  8x8 px object
+pub const ATTR1_SIZE_16x16:    u16 = 0x4000;    // Size flag for 16x16 px object
+pub const ATTR1_SIZE_32x32:    u16 = 0x8000;    // Size flag for 32x32 px object
+pub const ATTR1_SIZE_64x64:    u16 = 0xC000;    // Size flag for 64x64 px object
+// Tall sizes
+pub const ATTR1_SIZE_8x16:     u16 = 0;    // Size flag for  8x16 px object
+pub const ATTR1_SIZE_8x32:     u16 = 0x4000;    // Size flag for  8x32 px object
+pub const ATTR1_SIZE_16x32:    u16 = 0x8000;    // Size flag for 16x32 px object
+pub const ATTR1_SIZE_32x64:    u16 = 0xC000;    // Size flag for 32x64 px object
+// Wide sizes
+pub const ATTR1_SIZE_16x8:     u16 = 0;    // Size flag for 16x8 px object
+pub const ATTR1_SIZE_32x8:     u16 = 0x4000;    // Size flag for 32x8 px object
+pub const ATTR1_SIZE_32x16:    u16 = 0x8000;    // Size flag for 32x16 px object
+pub const ATTR1_SIZE_64x32:    u16 = 0xC000;    // Size flag for 64x64 px object
+
+
+pub const ATTR1_X_MASK:        u16 = 0x01FF;
+pub const ATTR1_X_SHIFT:       u16 = 0;
+#[inline]
+pub fn ATTR1_X(n:u16) -> u16 {
+    n << ATTR1_X_SHIFT
+}
+
+pub const ATTR1_AFF_ID_MASK:   u16 = 0x3E00;
+pub const ATTR1_AFF_ID_SHIFT:  u16 = 9;
+#[inline]
+pub fn ATTR1_AFF_ID(n:u16) -> u16 {
+    n << ATTR1_AFF_ID_SHIFT
+}
+
+pub const ATTR1_FLIP_MASK:     u16 = 0x3000;
+pub const ATTR1_FLIP_SHIFT:    u16 = 12;
+#[inline]
+pub fn ATTR1_FLIP(n:u16) -> u16 {
+    n << ATTR1_FLIP_SHIFT
+}
+
+pub const ATTR1_SIZE_MASK:     u16 = 0xC000;
+pub const ATTR1_SIZE_SHIFT:    u16 = 14;
+#[inline]
+pub fn ATTR1_SIZE(n:u16) -> u16 {
+    n << ATTR1_SIZE_SHIFT
+}
+
+
+// #define ATTR1_BUILDR(x, size, hflip, vflip)    \
+// ( ((x)&511) | (((hflip)&1)<<12) | (((vflip)&1)<<13) | (((size)&3)<<14) )
+
+// #define ATTR1_BUILDA(x, size, affid)            \
+// ( ((x)&511) | (((affid)&31)<<9) | (((size)&3)<<14) )
+
+
+// --- OAM attribute 2 -------------------------------------------------
+
+pub const ATTR2_ID_MASK:       u16 = 0x03FF;
+pub const ATTR2_ID_SHIFT:      u16 = 0;
+#[inline]
+pub fn ATTR2_ID(n:u16) -> u16 {
+    n << ATTR2_ID_SHIFT
+}
+
+pub const ATTR2_PRIO_MASK:     u16 = 0x0C00;
+pub const ATTR2_PRIO_SHIFT:    u16 = 10;
+#[inline]
+pub fn ATTR2_PRIO(n:u16) -> u16 {
+    n << ATTR2_PRIO_SHIFT
+}
+
+pub const ATTR2_PALBANK_MASK:  u16 = 0xF000;
+pub const ATTR2_PALBANK_SHIFT: u16 = 12;
+#[inline]
+pub fn ATTR2_PALBANK(n:u16) -> u16 {
+    n << ATTR2_PALBANK_SHIFT
+}
+
+// #define ATTR2_BUILD(id, pbank, prio)			\
+// ( ((id)&0x3FF) | (((pbank)&15)<<12) | (((prio)&3)<<10) )
+
+#[inline]
+pub fn ATTR2_BUILD(tile_id: u16, pbank: u16, prio:u16) -> u16 {
+    (tile_id & 0x3FF)
+     | ((pbank & 15)<<12)
+     | ((prio & 3)<<10)
+}
+
