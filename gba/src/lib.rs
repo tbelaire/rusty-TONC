@@ -1,5 +1,4 @@
-#![feature(intrinsics, core_intrinsics,
-           const_fn,
+#![feature(const_fn,
            associated_consts)]
 
 #![no_std]

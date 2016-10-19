@@ -1,8 +1,7 @@
-
 use core::slice;
-use ::memmap;
-use ::memdef;
-use core::intrinsics::{volatile_store, volatile_load};
+use memmap;
+use memdef;
+use core::ptr::{read_volatile, write_volatile};
 
 #[derive(Eq, PartialEq, Copy, Clone, Debug)]
 #[repr(C)]
@@ -36,8 +35,8 @@ pub const SCREEN_HEIGHT: i32 = 160;
 
 pub fn vid_vsync(){
     unsafe{
-    while volatile_load(memmap::REG_VCOUNT) >= 160 {}
-    while volatile_load(memmap::REG_VCOUNT) <  160 {}
+    while read_volatile(memmap::REG_VCOUNT) >= 160 {}
+    while read_volatile(memmap::REG_VCOUNT) <  160 {}
     }
 }
 
@@ -65,7 +64,7 @@ impl Mode3 {
     /// Calling this invalidates all other modes and enters Mode3.
     pub fn new () -> Mode3 {
         unsafe {
-            volatile_store(
+            write_volatile(
                 memmap::REG_DISPCNT,
                 memdef::DCNT_MODE3 | memdef::DCNT_BG2);
         }
@@ -103,7 +102,7 @@ impl Mode4 {
     /// You can toggle that by calling draw_page_flip().
     pub fn new() -> Mode4 {
         unsafe {
-            volatile_store(
+            write_volatile(
                 memmap::REG_DISPCNT,
                 memdef::DCNT_MODE4 | memdef::DCNT_BG2);
         }
@@ -174,8 +173,8 @@ impl Mode4 {
     pub fn page_flip(&mut self) {
         unsafe {
             self.draw_page_flip();
-            volatile_store(memmap::REG_DISPCNT,
-                           volatile_load(memmap::REG_DISPCNT)
+            write_volatile(memmap::REG_DISPCNT,
+                           read_volatile(memmap::REG_DISPCNT)
                            ^ memdef::DCNT_PAGE);
         }
     }
@@ -192,7 +191,7 @@ impl Mode5 {
     pub const SIZE : usize = 0xA000; // WIDTH * HEIGHT * BIT_DEPTH/8
     pub fn new() -> Mode5 {
         unsafe {
-            volatile_store(
+            write_volatile(
                 memmap::REG_DISPCNT,
                 memdef::DCNT_MODE5 | memdef::DCNT_BG2);
         }

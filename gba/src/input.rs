@@ -1,5 +1,5 @@
-use ::memmap;
-use core::intrinsics::{volatile_load};
+use memmap;
+use core::ptr::read_volatile;
 
 /// Keys also functions as the flags for the keys.
 #[repr(C)]
@@ -57,7 +57,7 @@ impl Input {
     /// This should be called once a frame.
     pub fn poll(&mut self) {
         self.prev = self.curr;
-        self.curr = unsafe {!(volatile_load(memmap::REG_KEYINPUT) as u32)}
+        self.curr = unsafe {!(read_volatile(memmap::REG_KEYINPUT) as u32)}
                     & KEY_MASK;
     }
 
